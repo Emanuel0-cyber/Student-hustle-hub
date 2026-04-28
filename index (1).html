@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Hustle Hub</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --card: #f5f5f5;
+      --accent: #4f46e5;
+      --border: #e5e7eb;
+    }
+    
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --text: #f1f5f9;
+      --card: #1e293b;
+      --accent: #818cf8;
+      --border: #334155;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Nav */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 5%; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--bg); z-index: 100;
+    }
+    .logo { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .theme-toggle { background: var(--card); border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; }
+
+    /* Sections */
+    section { padding: 3rem 5%; display: none; }
+    section.active { display: block; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+    .intro { font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem; }
+
+    /* Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--card); padding: 1.5rem; border-radius: 12px;
+      border: 1px solid var(--border); transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card h3 { margin-bottom: 0.5rem; color: var(--accent); }
+    .earning { font-weight: 600; margin: 0.75rem 0; }
+    .btn {
+      background: var(--accent); color: white; border: none;
+      padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer;
+      font-weight: 600; text-decoration: none; display: inline-block;
+    }
+    .btn:hover { opacity: 0.9; }
+
+    /* Search */
+    .search-box { width: 100%; padding: 0.8rem; margin-bottom: 2rem; 
+      border: 1px solid var(--border); border-radius: 8px; 
+      background: var(--card); color: var(--text); font-size: 1rem;
+    }
+
+    /* Form */
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    input, textarea {
+      width: 100%; padding: 0.8rem; border: 1px solid var(--border);
+      border-radius: 8px; background: var(--card); color: var(--text);
+      font-family: inherit;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { gap: 1rem; font-size: 0.9rem; }
+      h1 { font-size: 2rem; }
+      section { padding: 2rem 5%; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Student Hustle Hub</div>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+      <li><a href="#" class="nav-link" data-page="hustles">Hustles</a></li>
+      <li><a href="#" class="nav-link" data-page="skills">Skills</a></li>
+      <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+  </nav>
+
+  <!-- Home -->
+  <section id="home" class="active">
+    <div class="container">
+      <h1>Find legit ways to earn as a student</h1>
+      <p class="intro">Discover side hustles, learn money-making skills, and track your progress. No scams, just real opportunities that fit your schedule.</p>
+      <button class="btn" onclick="showPage('hustles')">Explore Hustles →</button>
+    </div>
+  </section>
+
+  <!-- Hustles -->
+  <section id="hustles">
+    <div class="container">
+      <h2>Top Student Hustles</h2>
+      <input type="text" class="search-box" id="searchHustles" placeholder="Search hustles...">
+      <div class="grid" id="hustlesGrid"></div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <h2>Skills That Pay</h2>
+      <p class="intro">Learn these high-demand skills for free. Each takes 1-3 months to get started.</p>
+      <div class="grid" id="skillsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // Data
+    const hustles = [
+      { title: "Freelance Writing", desc: "Write blog posts, scripts, or copy for clients on Upwork/Fiverr.", earning: "$100 - $2,000/mo" },
+      { title: "Affiliate Marketing", desc: "Promote products on TikTok/IG and earn commission per sale.", earning: "$50 - $5,000+/mo" },
+      { title: "Print on Demand", desc: "Design t-shirts & mugs. Sites like Redbubble handle printing.", earning: "$20 - $1,500/mo" },
+      { title: "Video Editing", desc: "Edit YouTube Shorts/TikToks for creators. High demand.", earning: "$200 - $3,000/mo" },
+      { title: "Tutoring Online", desc: "Teach subjects you know on Preply or to local students.", earning: "$150 - $1,200/mo" },
+      { title: "Social Media Management", desc: "Run Instagram pages for small businesses.", earning: "$300 - $2,500/mo" }
+    ];
+
+    const skills = [
+      { title: "Web Development", link: "https://www.youtube.com/@freecodecamp" },
+      { title: "Graphic Design", link: "https://www.youtube.com/@SatoriGraphics" },
+      { title: "Video Editing", link: "https://www.youtube.com/@PremiereGal" },
+      { title: "Copywriting", link: "https://www.youtube.com/@AlexCattoni" },
+      { title: "Digital Marketing", link: "https://www.youtube.com/@NeilPatel" },
+      { title: "UI/UX Design", link: "https://www.youtube.com/@ajsmart" }
+    ];
+
+    // Render Hustles
+    const hustlesGrid = document.getElementById('hustlesGrid');
+    function renderHustles(filter = '') {
+      hustlesGrid.innerHTML = '';
+      hustles
+        .filter(h => h.title.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(h => {
+          hustlesGrid.innerHTML += `
+            <div class="card">
+              <h3>${h.title}</h3>
+              <p>${h.desc}</p>
+              <p class="earning">💰 ${h.earning}</p>
+            </div>
+          `;
+        });
+    }
+    renderHustles();
+
+    // Render Skills
+    const skillsGrid = document.getElementById('skillsGrid');
+    skills.forEach(s => {
+      skillsGrid.innerHTML += `
+        <div class="card">
+          <h3>${s.title}</h3>
+          <p>Free tutorials to get you started fast.</p>
+          <a href="${s.link}" target="_blank" class="btn">Start Learning</a>
+        </div>
+      `;
+    });
+
+    // Navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+    function showPage(pageId) {
+      sections.forEach(s => s.classList.remove('active'));
+      navLinks.forEach(l => l.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+    }
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage(link.dataset.page);
+      });
+    });
+
+    // Search/Filter
+    document.getElementById('searchHustles').addEventListener('input', (e) => {
+      renderHustles(e.target.value);
+    });
+
+// Contact Form - WhatsApp
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  
+  const yourWhatsAppNumber = '2349153360627';
+  const text = `*Student Hustle Hub Contact*%0A%0AName: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+  
+  window.open(`https://wa.me/${yourWhatsAppNumber}?text=${text}`, '_blank');
+  e.target.reset();
+});
+  
+    // Dark Mode + localStorage
+    const themeToggle = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
